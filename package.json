@@ -1,0 +1,27 @@
+{
+  "name": "muneem-serializers",
+  "version": "1.0.0",
+  "description": "Add basic serialization methods",
+  "main": "src/serializers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "muneem",
+    "writeBuffer",
+    "writeStream",
+    "writeBuffer",
+    "serializer"
+  ],
+  "author": "Amit Kumar Gupta",
+  "license": "MIT",
+  "devDependencies": {
+    "mock-req": "^0.2.0",
+    "mock-res": "^0.5.0"
+  },
+  "dependencies": {
+    "jasmine": "^3.1.0",
+    "muneem": "file:../../muneem",
+    "pump": "^3.0.0"
+  }
+}
