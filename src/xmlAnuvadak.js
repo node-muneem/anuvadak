@@ -21,7 +21,7 @@ const j2xParser = require("fast-xml-parser").j2xParser;
 
         var parser;
         if(anuvadakConfig && anuvadakConfig.write && anuvadakConfig.write.xml){
-            parser = new j2xParser(anuvadakConfig.write.xml);
+            parser = anuvadakConfig.write.xml;
         }else{
             parser = globalnstance;
         }
@@ -43,7 +43,18 @@ function buildGlobalConfig(options){
     //return globalnstance;
 }
 
+function getWriteParser(options){
+    var parser;
+    if(options && options.write && options.write.xml){
+        parser = new j2xParser(options.write.xml);
+    }else{
+        parser = new j2xParser();
+    }
+    return parser;
+}
+
 module.exports = {
     writeXml : writeXml,
-    buildGlobalConfig : buildGlobalConfig
+    buildGlobalConfig : buildGlobalConfig,
+    getWriteParser : getWriteParser
 }

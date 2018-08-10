@@ -27,9 +27,9 @@ function buildConfiguration( routeContext ){
             if( nimnConfig && nimnConfig.schema ){
                 nimnConfig.schema = nimnAnuvadak.buildSchema( nimnConfig.schema );
             }
-            const xmlConfig = routeContext.anuvadak.write.xml;
+            var xmlConfig = routeContext.anuvadak.write.xml;
             if( xmlConfig ){
-                xmlConfig = xmlAnuvadak.getWriteParser( xmlConfig );
+                routeContext.anuvadak.write.xml = xmlAnuvadak.getWriteParser( xmlConfig );
             }
 
         }else if(routeContext.anuvadak.from){//read from request
