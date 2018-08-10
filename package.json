@@ -1,27 +1,40 @@
 {
-  "name": "muneem-serializers",
+  "name": "anuvadak",
   "version": "1.0.0",
-  "description": "Add basic serialization methods",
-  "main": "src/serializers.js",
+  "description": "Add basic serialization methods to Muneem framework",
+  "main": "src/anuvadak.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine tests/*test.js",
+    "coverage": "nyc jasmine tests/*test.js; nyc report --reporter=lcov"
   },
   "keywords": [
     "muneem",
-    "writeBuffer",
-    "writeStream",
-    "writeBuffer",
-    "serializer"
+    "buffer",
+    "stream",
+    "text",
+    "serializer",
+    "anuvadak",
+    "xml",
+    "json"
   ],
   "author": "Amit Kumar Gupta",
   "license": "MIT",
   "devDependencies": {
+    "jasmine": "^3.2.0",
     "mock-req": "^0.2.0",
-    "mock-res": "^0.5.0"
+    "mock-res": "^0.5.0",
+    "muneem": "^2.0.0",
+    "nyc": "^12.0.2"
   },
   "dependencies": {
-    "jasmine": "^3.1.0",
-    "muneem": "file:../../muneem",
+    "fast-xml-parser": "^3.12.0",
+    "nimnjs": "^2.2.0",
     "pump": "^3.0.0"
+  },
+  "nyc": {
+    "exclude": [
+      "tests",
+      "build"
+    ]
   }
 }
