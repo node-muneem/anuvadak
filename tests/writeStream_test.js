@@ -3,13 +3,14 @@ const MockReq = require('mock-req');
 const fs = require('fs');
 const path = require('path');
 const Muneem = require('muneem');
-const serializer = require('./../src/serializers')(Muneem);
+const anuvadak = require('./../src/anuvadak');
 const zlib = require('zlib');
 
 describe ('writeStream', () => {
 
     it('should set data, content-type when given', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         //create a file for test
         fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
@@ -49,6 +50,7 @@ describe ('writeStream', () => {
 
     it('should pipe data stream when to pipe', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         //create a file for test
         fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
@@ -92,6 +94,7 @@ describe ('writeStream', () => {
 
     it('should not pipe data stream when not to pipe', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         //create a file for test
         fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
@@ -123,8 +126,8 @@ describe ('writeStream', () => {
             chunks = Buffer.concat(chunks);
             expect(response.getHeader("content-type")).toEqual("text/plain");
             //expect(zlib.gunzipSync(chunks).toString()).toEqual("This file is ready for download");
-            expect(chunks.toString() ).toEqual("This file is ready for download");
-            expect(response.statusCode ).toEqual(200);
+            expect( chunks.toString() ).toEqual("This file is ready for download");
+            expect( response.statusCode ).toEqual(200);
             done();
         });
 
@@ -133,6 +136,7 @@ describe ('writeStream', () => {
 
     it('should not set type if already set', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         //create a file for test
         fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
@@ -173,6 +177,7 @@ describe ('writeStream', () => {
 
     it('should throw an error when invalid data is given', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeStream(new Date());
@@ -195,6 +200,7 @@ describe ('writeStream', () => {
 
     it('should throw an error when null data is given', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeStream(null);
@@ -217,6 +223,7 @@ describe ('writeStream', () => {
 
     it('should throw an error when undefined data is given', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeStream();

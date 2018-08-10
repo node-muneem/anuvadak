@@ -1,16 +1,16 @@
 const MockRes = require('mock-res');
 const MockReq = require('mock-req');
 const Muneem = require('muneem');
-const serializer = require('./../src/serializers')(Muneem);
+const anuvadak = require('./../src/anuvadak');
 
 describe ('writeText', () => {
 
-    it('should set empty data, content-type, and 0 length when data is null', (done) => {
+    it('should throw Error when data is null', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeText(null);
-            assertAnswerObject(answer, "", "text/plain", 0);
         } ) ;
 
         muneem.route({
@@ -24,16 +24,16 @@ describe ('writeText', () => {
 
         var response = new MockRes();
 
-        assertResponse(response,"", 200, done);
+        assertResponse(response,"", 500, done);
         muneem.routesManager.router.lookup(request,response);
     });
 
-    it('should set empty data, content-type, and 0 length when data is undefined', (done) => {
+    it('should throw Error data is undefined', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
-            answer.writeText(undefined);
-            assertAnswerObject(answer, "", "text/plain", 0)
+            answer.writeText();
         } ) ;
 
         muneem.route({
@@ -47,12 +47,13 @@ describe ('writeText', () => {
 
         var response = new MockRes();
 
-        assertResponse(response,"", 200, done);
+        assertResponse(response,"", 500, done);
         muneem.routesManager.router.lookup(request,response);
     });
 
     it('should set empty data, content-type, and 0 length when data is empty string', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeText("");
@@ -77,6 +78,7 @@ describe ('writeText', () => {
     it('should set data, content-type, and length when data is string type', (done) => {
         //Muneem.setLogger(console);
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText("some data");
@@ -100,6 +102,7 @@ describe ('writeText', () => {
 
     it('should set data, content-type, and length when data is number type', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText(485);
@@ -123,6 +126,7 @@ describe ('writeText', () => {
     
     it('should overwrite data when safety is off', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText("some data");
@@ -147,6 +151,7 @@ describe ('writeText', () => {
 
     it('should not overwrite data when safety is on', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText("some data");
@@ -171,6 +176,7 @@ describe ('writeText', () => {
 
     it('should not check for safety when to append', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText("some data");
@@ -195,6 +201,7 @@ describe ('writeText', () => {
 
     it('should not set content-type if already set', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.type("some/else")
@@ -220,6 +227,7 @@ describe ('writeText', () => {
 
     it('should throw an error when invalid data is given', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText(new Date());

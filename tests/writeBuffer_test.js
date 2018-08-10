@@ -1,12 +1,13 @@
 const MockRes = require('mock-res');
 const MockReq = require('mock-req');
 const Muneem = require('muneem');
-const serializer = require('./../src/serializers')(Muneem);
+const anuvadak = require('./../src/anuvadak');
 
 describe ('writeBuffer', () => {
 
     it('should  set data, content-type, and length', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeBuffer(Buffer("some data"));
@@ -30,6 +31,7 @@ describe ('writeBuffer', () => {
 
     it('should  not set data if already set and safety is on', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeBuffer(Buffer("some data"), null, null, true);
@@ -54,6 +56,7 @@ describe ('writeBuffer', () => {
 
     it('should  overwrite data if already set and safety is off', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeBuffer(Buffer("some data"), null, null, false);
@@ -78,6 +81,7 @@ describe ('writeBuffer', () => {
 
     it('should  not set content type if set', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.type("some/type");
@@ -103,6 +107,7 @@ describe ('writeBuffer', () => {
 
     it('should throw an error when invalid data is given', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeBuffer(new Date());
@@ -125,6 +130,7 @@ describe ('writeBuffer', () => {
 
     it('should throw an error when null data is given', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeBuffer(null);
@@ -147,6 +153,7 @@ describe ('writeBuffer', () => {
 
     it('should throw an error when undefined data is given', (done) => {
         const muneem = Muneem();
+        anuvadak(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeBuffer( undefined );
