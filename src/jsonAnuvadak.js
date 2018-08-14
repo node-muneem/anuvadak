@@ -7,7 +7,7 @@ const { setType, setLength} = require("./util")
  * @param {number} length : content-length
  * @param {boolean} append : append content if already present
  */
-module.exports = function(data, type, length, safe){
+module.exports.writeJson = function(data, type, length, safe){
     if(data === undefined || typeof data === 'function' || typeof  data === 'symbol' ){
         this.length(0);
         throw Error("Unsupported type. Given data can't be parsed to JSON.");
@@ -19,4 +19,11 @@ module.exports = function(data, type, length, safe){
         setType(this, type, "application/json");
         setLength(this, length)
     }
+}
+
+
+module.exports.readJson = async function(){
+    await this.readBody();
+    this.body = JSON.parse( this.body.toString() );
+    return this.body;
 }

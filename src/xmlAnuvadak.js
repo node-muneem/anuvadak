@@ -1,60 +1,66 @@
 const { setType, setLength} = require("./util")
 const j2xParser = require("fast-xml-parser").j2xParser;
+const xmlParser = require("fast-xml-parser");
 
-/**
- * Write data (JS object) as XML string if it is not written before. 
- * Content type will not be set if it is already set
- * @param {object} data : content
- * @param {string} type : content-type
- * @param {number} length : content-length
- * @param {boolean} append : append content if already present
- */
- function writeXml(data, type, length, safe){
+function XMLAnuvadak(options){
+    const xmlWriter = getWriter(options);
+    const xmlReadOptions = getReadOptions(options);
 
-    if(data === null || data === undefined || typeof data !== "object" ){
-        this.length(0);
-        throw Error("Unsupported type. Given data can't be parsed to XML.");
-    }else if(this.data && safe){
-        return;
-    }else{
-        const anuvadakConfig = this._for.context.route.anuvadak;
+    this.writeXml = function (data, type, length, safe){
 
-        var parser;
-        if(anuvadakConfig && anuvadakConfig.write && anuvadakConfig.write.xml){
-            parser = anuvadakConfig.write.xml;
+        if(data === null || data === undefined || typeof data !== "object" ){
+            this.length(0);
+            throw Error("Unsupported type. Given data can't be parsed to XML.");
+        }else if(this.data && safe){
+            return;
         }else{
-            parser = globalnstance;
+            const anuvadakConfig = this._for.context.route.anuvadak;
+    
+            var parser;
+            if(anuvadakConfig && anuvadakConfig.write && anuvadakConfig.write.xml){
+                parser = anuvadakConfig.write.xml;
+            }else{
+                parser = xmlWriter;
+            }
+    
+            this.data = parser.parse(data);
+    
+            setType(this, type, "text/xml");
+            setLength(this, length)
+        } 
+    }
+
+    this.readXml = async function(){
+        const anuvadakConfig = this._for.context.route.anuvadak;
+    
+        var parsingOptions ;
+        if(anuvadakConfig && anuvadakConfig.read && anuvadakConfig.read.xml){
+            parsingOptions = anuvadakConfig.read.xml;
+        }else{
+            parsingOptions = xmlReadOptions;
         }
-
-        this.data = parser.parse(data);
-
-        setType(this, type, "text/xml");
-        setLength(this, length)
-    } 
+        
+        await this.readBody();
+        this.data = xmlParser.parse(data, parsingOptions);
+        return this.data;
+    }
 }
 
-var globalnstance;
-function buildGlobalConfig(options){
+function getWriter(options){
     if(options && options.write && options.write.xml){
-        globalnstance = new j2xParser(options.write.xml);
+        return new j2xParser(options.write.xml);
     }else{
-        globalnstance = new j2xParser();
+        return new j2xParser();
     }
-    //return globalnstance;
 }
 
-function getWriteParser(options){
-    var parser;
-    if(options && options.write && options.write.xml){
-        parser = new j2xParser(options.write.xml);
-    }else{
-        parser = new j2xParser();
+function getReadOptions(options){
+    if(options && options.read && options.read.xml){
+        return options.read.xml;
     }
-    return parser;
 }
 
 module.exports = {
-    writeXml : writeXml,
-    buildGlobalConfig : buildGlobalConfig,
-    getWriteParser : getWriteParser
+    XMLAnuvadak : XMLAnuvadak,
+    getWriter : getWriter
 }
