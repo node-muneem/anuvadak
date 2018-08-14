@@ -59,7 +59,7 @@ describe ('xmlAnuvadak', () => {
         muneem.routesManager.router.lookup(request,response);
     });
 
-    it('should not parse to XML when some data is already set and safety is on', () => {
+    it('should not parse to XML when some data is already set and safety is on', (done) => {
         const muneem = Muneem();
         anuvadak(muneem);
 
@@ -70,7 +70,8 @@ describe ('xmlAnuvadak', () => {
                 "some" : "data"
             }, null, null, true);
 
-            assertAnswerObject(answer, "add some data")
+            assertAnswerObject(answer, "add some data");
+            done();
         } ) ;
 
         var request = buildRequest(muneem)
@@ -81,25 +82,7 @@ describe ('xmlAnuvadak', () => {
         muneem.routesManager.router.lookup(request,response);
     });
 
-    it('should parse XML when no options are defined', () => {
-        const muneem = Muneem();
-        anuvadak(muneem);
-
-        muneem.addHandler("main", (asked,answer) => {
-            answer.writeXml({
-                "some" : "data"
-            });
-            assertAnswerObject(answer, '<some>data</some>', 'text/xml', 17);
-        } ) ;
-
-        var request = buildRequest(muneem)
-        var response = new MockRes();
-
-        //assertResponse(response,"", 200, done);
-        muneem.routesManager.router.lookup(request,response);
-    });
-
-    it('should parse XML when no options are defined', () => {
+    it('should parse XML when no options are defined', (done) => {
         const muneem = Muneem();
         anuvadak(muneem);
 
@@ -111,6 +94,7 @@ describe ('xmlAnuvadak', () => {
                 }
             });
             assertAnswerObject(answer, '<some><@_a>attrib</@_a>some text data</some>', 'text/xml', 44);
+            done();
         } ) ;
 
         var request = buildRequest(muneem)
@@ -119,7 +103,7 @@ describe ('xmlAnuvadak', () => {
         muneem.routesManager.router.lookup(request,response);
     });
 
-    it('should parse XML when global options are present', () => {
+    it('should parse XML when global options are present', (done) => {
         const muneem = Muneem();
         anuvadak(muneem, {
             write:{
@@ -137,6 +121,7 @@ describe ('xmlAnuvadak', () => {
                 }
             });
             assertAnswerObject(answer, '<some a="attrib">some text data</some>', 'text/xml', 38);
+            done();
         } ) ;
 
         var request = buildRequest(muneem)
@@ -145,7 +130,7 @@ describe ('xmlAnuvadak', () => {
         muneem.routesManager.router.lookup(request,response);
     });
 
-    it('should parse XML and ignore global options when route specific options are present', () => {
+    it('should parse XML and ignore global options when route specific options are present', (done) => {
         const muneem = Muneem();
         anuvadak(muneem, {
             write:{
@@ -163,6 +148,7 @@ describe ('xmlAnuvadak', () => {
                 }
             });
             assertAnswerObject(answer, '<some><@_a>attrib</@_a>some text data</some>', 'text/xml', 44);
+            done();
         } ) ;
 
         var request = buildRequest(muneem, {

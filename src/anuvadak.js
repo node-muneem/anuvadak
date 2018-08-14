@@ -3,7 +3,6 @@ const writeStream = require("./writeStream");
 const writeBuffer = require("./writeBuffer");
 const {writeJson, readJson} = require("./jsonAnuvadak");
 const { XMLAnuvadak, getWriter } = require("./xmlAnuvadak");
-const nimnAnuvadak = require("./nimnAnuvadak");
 
 module.exports = (muneem, options) => {
     options = options || {};
@@ -26,10 +25,7 @@ module.exports = (muneem, options) => {
 function buildConfiguration( routeContext ){
     if(routeContext.anuvadak) {
         if(routeContext.anuvadak.write){//write to response
-            const nimnConfig = routeContext.anuvadak.write.nimn;
-            if( nimnConfig && nimnConfig.schema ){
-                nimnConfig.schema = nimnAnuvadak.buildSchema( nimnConfig.schema );
-            }
+            
             var xmlWriteConfig = routeContext.anuvadak.write.xml;
             if( xmlWriteConfig ){
                 routeContext.anuvadak.write.xml = getWriter( xmlWriteConfig );

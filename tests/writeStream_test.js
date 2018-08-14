@@ -50,6 +50,71 @@ describe ('writeStream', () => {
         muneem.routesManager.router.lookup(request,response);
     });
 
+    it('should overwrite previously set data when safety is off', (done) => {
+        const muneem = Muneem();
+        anuvadak(muneem);
+
+        muneem.addHandler("main", (asked,answer) => {
+            answer.write("previous data");
+            //create a stream
+            const fileReadableStream = fs.createReadStream(path.resolve(__dirname, "fileToDownload"));
+            answer.writeStream(fileReadableStream, "text/plain");
+            expect(answer.type() ).toEqual("text/plain");
+        } ) ;
+
+        muneem.route({
+            uri: "/test",
+            to: "main"
+        });
+
+        var request  = new MockReq({
+            url: '/test'
+        });
+
+        var response = new MockRes();
+
+        let chunks = [];   
+        response.on('data', chunk => {
+            chunks.push(chunk);
+        });
+        response.on('finish', function() {
+            chunks = Buffer.concat(chunks);
+            expect(response.getHeader("content-type")).toEqual("text/plain");
+            expect(chunks.toString() ).toEqual("This file is ready for download");
+            expect(response.statusCode ).toEqual(200);
+            done();
+        });
+
+        muneem.routesManager.router.lookup(request,response);
+    });
+
+    it('should not overwrite previously set data when safety is on', (done) => {
+        const muneem = Muneem();
+        anuvadak(muneem);
+
+        muneem.addHandler("main", (asked,answer) => {
+            answer.write("previous data");
+            //create a stream
+            const fileReadableStream = fs.createReadStream(path.resolve(__dirname, "fileToDownload"));
+            answer.writeStream(fileReadableStream, "text/plain", true);
+            expect(answer.data ).toEqual("previous data");
+            done();
+        } ) ;
+
+        muneem.route({
+            uri: "/test",
+            to: "main"
+        });
+
+        var request  = new MockReq({
+            url: '/test'
+        });
+
+        var response = new MockRes();
+
+        muneem.routesManager.router.lookup(request,response);
+    });
+
     it('should pipe data stream when to pipe', (done) => {
         const muneem = Muneem();
         anuvadak(muneem);
@@ -62,6 +127,51 @@ describe ('writeStream', () => {
             const fileReadableStream = fs.createReadStream(path.resolve(__dirname, "fileToDownload"));
             answer.writeStream(fileReadableStream, "text/plain");
             answer.writeStream(zlib.createGzip(), null, null, true);
+            answer.setHeader("content-encoding" ,"gzip");
+            expect(answer.type() ).toEqual("text/plain");
+        } ) ;
+
+        muneem.route({
+            uri: "/test",
+            to: "main"
+        });
+
+        var request  = new MockReq({
+            url: '/test'
+        });
+
+        var response = new MockRes();
+
+        let chunks = [];   
+        response.on('data', chunk => {
+            chunks.push(chunk);
+        });
+        response.on('finish', function() {
+            chunks = Buffer.concat(chunks);
+            expect(response.getHeader("content-type")).toEqual("text/plain");
+            expect(response.getHeader("content-encoding")).toEqual("gzip");
+            expect(zlib.gunzipSync(chunks).toString()).toEqual("This file is ready for download");
+            //expect(chunks.toString() ).toEqual("This file is ready for download");
+            expect(response.statusCode ).toEqual(200);
+            done();
+        });
+
+        muneem.routesManager.router.lookup(request,response);
+    });
+
+
+    it('should pipe data stream even if safety is on', (done) => {
+        const muneem = Muneem();
+        anuvadak(muneem);
+
+        //create a file for test
+        fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
+
+        muneem.addHandler("main", (asked,answer) => {
+            //create a stream
+            const fileReadableStream = fs.createReadStream(path.resolve(__dirname, "fileToDownload"));
+            answer.writeStream(fileReadableStream, "text/plain");
+            answer.writeStream(zlib.createGzip(), null, true, true);
             answer.setHeader("content-encoding" ,"gzip");
             expect(answer.type() ).toEqual("text/plain");
         } ) ;
@@ -273,6 +383,7 @@ describe ('writeStream', () => {
 
         muneem.routesManager.router.lookup(request, response);
     });
+    
 
     function assertResponse(response, data, status, done, type){
 
