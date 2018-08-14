@@ -248,6 +248,32 @@ describe ('writeText', () => {
         muneem.routesManager.router.lookup(request, response);
     });
 
+    it('should throw an error when invalid data is appended', (done) => {
+        const muneem = Muneem();
+        anuvadak(muneem);
+
+        muneem.addHandler("main", (asked, answer) => {
+            answer.write(Buffer.from("buffer data"));
+            expect(()=>{
+                answer.writeText("text data", null , null, false, true);
+            }).toThrowError("Unsupported type. You're trying to append string data to non-string data.");
+            done();
+        } ) ;
+
+        muneem.route({
+            uri: "/test",
+            to: "main"
+        });
+
+        var request  = new MockReq({
+            url: '/test'
+        });
+
+        var response = new MockRes();
+
+        muneem.routesManager.router.lookup(request, response);
+    });
+
     function assertResponse(response, data, status, done){
         response.on('finish', function() {
             expect(response._getString() ).toEqual(data);

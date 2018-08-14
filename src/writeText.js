@@ -19,11 +19,11 @@ module.exports = function(data, type, length, safe, append){
 
     if( !this.data ){ //null, empty, 0, undefined
         this.data = data;
-    }else if( safe ){
+    }else if( safe && !append ){
             return;
     }else if( append ){
         if( typeof this.data !== "string" ){
-            throw Error("Unsupported type. You're trying to append string data to non-string data");
+            throw Error("Unsupported type. You're trying to append string data to non-string data.");
         }else{
             this.data += data;
         }

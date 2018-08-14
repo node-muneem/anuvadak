@@ -11,11 +11,11 @@ module.exports = function(data, type, length, safe, append){
         throw Error("Unsupported type. You're trying to set non-buffer data");
     }else if( !this.data ){ //null, empty, 0, undefined
         this.data = data;
-    }else if(safe){
+    }else if(safe && !append){
             return;
     }else if(append){
         if( !Buffer.isBuffer(this.data) ){
-            throw Error("Unsupported type. You're trying to append buffer to non-buffer");
+            throw Error("Unsupported type. You're trying to append buffer to non-buffer.");
         }else{
             this.data = Buffer.concat([this.data, data]);
         }

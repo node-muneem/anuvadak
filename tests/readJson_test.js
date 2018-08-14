@@ -5,14 +5,14 @@ const anuvadak = require('./../src/anuvadak');
 
 describe ('Anuvadak', () => {
 
-    it('should read JSON request stream', async () => {
+    it('should read JSON request stream', async (done) => {
         const muneem = Muneem();
         anuvadak(muneem);
 
         muneem.addHandler("main", async (asked,answer) => {
             var data = await asked.readJson();
             expect(data).toEqual({some : "data"});
-            console.log("here")
+            done();
         } ) ;
 
         var dataRequest = JSON.stringify( {

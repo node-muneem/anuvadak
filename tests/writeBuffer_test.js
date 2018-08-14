@@ -105,6 +105,32 @@ describe ('writeBuffer', () => {
         muneem.routesManager.router.lookup(request,response);
     });
 
+    it('should append buffer data', (done) => {
+        const muneem = Muneem();
+        anuvadak(muneem);
+
+        muneem.addHandler("main", (asked,answer) => {
+            answer.type("some/type");
+            answer.writeBuffer(Buffer("some data "), null, null, false);
+            answer.writeBuffer(Buffer("some more data"), null, null, false, true);
+            assertAnswerObject(answer, Buffer("some data some more data"), "some/type", 24);
+        } ) ;
+
+        muneem.route({
+            uri: "/test",
+            to: "main"
+        });
+
+        var request  = new MockReq({
+            url: '/test'
+        });
+
+        var response = new MockRes();
+
+        assertResponse(response,"some data some more data", 200, done);
+        muneem.routesManager.router.lookup(request,response);
+    });
+
     it('should throw an error when invalid data is given', (done) => {
         const muneem = Muneem();
         anuvadak(muneem);
@@ -174,6 +200,31 @@ describe ('writeBuffer', () => {
         muneem.routesManager.router.lookup(request, response);
     });
 
+    it('should throw an error when invalid data is appended', (done) => {
+        const muneem = Muneem();
+        anuvadak(muneem);
+
+        muneem.addHandler("main", (asked, answer) => {
+            answer.write("new Date()");
+            expect(()=>{
+                answer.writeBuffer( Buffer.from( "new Date()" ), null, null, false, true);
+            }).toThrowError("Unsupported type. You're trying to append buffer to non-buffer.");
+            done();
+        } ) ;
+
+        muneem.route({
+            uri: "/test",
+            to: "main"
+        });
+
+        var request  = new MockReq({
+            url: '/test'
+        });
+
+        var response = new MockRes();
+
+        muneem.routesManager.router.lookup(request, response);
+    });
 
     function assertResponse(response, data, status, done){
         response.on('finish', function() {

@@ -8,12 +8,14 @@ const zlib = require('zlib');
 
 describe ('writeStream', () => {
 
+    beforeAll(() => {
+        //create a file for test
+        fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
+    });
+
     it('should set data, content-type when given', (done) => {
         const muneem = Muneem();
         anuvadak(muneem);
-
-        //create a file for test
-        fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
 
         muneem.addHandler("main", (asked,answer) => {
             //create a stream
@@ -241,6 +243,34 @@ describe ('writeStream', () => {
         var response = new MockRes();
 
         assertResponse(response, "", 500, done);
+        muneem.routesManager.router.lookup(request, response);
+    });
+
+    it('should throw an error when invalid data is appended', (done) => {
+        const muneem = Muneem();
+        anuvadak(muneem);
+
+        muneem.addHandler("main", (asked, answer) => {
+            answer.write("new Date()");
+            expect(()=>{
+                const fileReadableStream = fs.createReadStream(path.resolve(__dirname, "fileToDownload"));
+                answer.type("text/plain");
+                answer.writeStream(fileReadableStream, "text/plain2", false, true);
+            }).toThrowError("Unsupported type. You're trying to pipe stream data on non-stream data.");
+            done();
+        } ) ;
+
+        muneem.route({
+            uri: "/test",
+            to: "main"
+        });
+
+        var request  = new MockReq({
+            url: '/test'
+        });
+
+        var response = new MockRes();
+
         muneem.routesManager.router.lookup(request, response);
     });
 
