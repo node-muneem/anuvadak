@@ -5,17 +5,18 @@ const anuvadak = require('./../src/anuvadak');
 
 describe ('Anuvadak', () => {
 
-    it('should read XML request stream', async () => {
+    it('should read XML request stream with default options', async (done) => {
         const muneem = Muneem();
         anuvadak(muneem);
 
         muneem.addHandler("main", async (asked,answer) => {
             var data = await asked.readXml();
-            expect(data).toEqual({some : "data"});
+            expect(data).toEqual({some : "some text data"});
+            done();
         } ) ;
 
         var request = buildRequest(muneem)
-        request.write("<some><@_a>attrib</@_a>some text data</some>");
+        request.write("<some a='attrib'>some text data</some>");
         request.end();
 
         var response = new MockRes();
@@ -24,7 +25,7 @@ describe ('Anuvadak', () => {
         muneem.routesManager.router.lookup(request,response);
     });
 
-    it('should read XML request stream', async () => {
+    it('should read XML request stream with globally defined options', async (done) => {
         const muneem = Muneem();
         anuvadak(muneem,{
             read:{
@@ -36,11 +37,47 @@ describe ('Anuvadak', () => {
 
         muneem.addHandler("main", async (asked,answer) => {
             var data = await asked.readXml();
-            expect(data).toEqual({some : "data"});
+            expect(data).toEqual({some : {
+                "#text" : "some text data",
+                "@_a" : "attrib"
+            }});
+            done();
         } ) ;
 
         var request = buildRequest(muneem)
-        request.write("<some><@_a>attrib</@_a>some text data</some>");
+        request.write("<some a='attrib'>some text data</some>");
+        request.end();
+
+        var response = new MockRes();
+
+        //assertResponse(response,"", 200, done);
+        muneem.routesManager.router.lookup(request,response);
+    });
+
+    it('should read XML request stream with route level options', async (done) => {
+        const muneem = Muneem();
+        anuvadak(muneem,{
+            read:{
+                xml: {
+                    ignoreAttributes : false
+                }
+            }
+        });
+
+        muneem.addHandler("main", async (asked,answer) => {
+            var data = await asked.readXml();
+            expect(data).toEqual({some : "some text data"});
+            done();
+        } ) ;
+
+        var request = buildRequest(muneem, {
+            read:{
+                xml: {
+                    ignoreAttributes : true
+                }
+            }
+        })
+        request.write("<some a='attrib'>some text data</some>");
         request.end();
 
         var response = new MockRes();

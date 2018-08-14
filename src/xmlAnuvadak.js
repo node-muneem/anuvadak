@@ -31,7 +31,7 @@ function XMLAnuvadak(options){
     }
 
     this.readXml = async function(){
-        const anuvadakConfig = this._for.context.route.anuvadak;
+        const anuvadakConfig = this.context.route.anuvadak;
     
         var parsingOptions ;
         if(anuvadakConfig && anuvadakConfig.read && anuvadakConfig.read.xml){
@@ -41,8 +41,8 @@ function XMLAnuvadak(options){
         }
         
         await this.readBody();
-        this.data = xmlParser.parse(data, parsingOptions);
-        return this.data;
+        this.body = xmlParser.parse( this.body.toString() , parsingOptions);
+        return this.body;
     }
 }
 
