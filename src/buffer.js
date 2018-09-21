@@ -5,7 +5,7 @@ const { setType, setLength} = require("./util")
  * @param {string} type : content-type
  * @param {number|string} length : content-length
  */
-module.exports = function(data, type, length, safe, append){
+function writeBuffer(data, type, length, safe, append){
     if(data === null || data === undefined || !Buffer.isBuffer(data)){
         this.length(0);
         throw Error("Unsupported type. You're trying to set non-buffer data");
@@ -26,3 +26,10 @@ module.exports = function(data, type, length, safe, append){
     setType(this, type, "application/octet-stream");
     setLength(this, length, Buffer.byteLength(this.data))
 }
+
+
+function config(muneem, options){
+    muneem.addToAnswer("writeBuffer", writeBuffer);
+}
+
+module.exports = config;

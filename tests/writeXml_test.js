@@ -7,7 +7,7 @@ describe ('xmlAnuvadak', () => {
 
     it('should throw error when null data is given', () => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.xml(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             expect( function(){
@@ -25,7 +25,7 @@ describe ('xmlAnuvadak', () => {
 
     it('should throw error when no data is given', () => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.xml(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             expect( function(){
@@ -43,7 +43,7 @@ describe ('xmlAnuvadak', () => {
 
     it('should throw error when invalid data is given', () => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.xml(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             expect( function(){
@@ -61,7 +61,7 @@ describe ('xmlAnuvadak', () => {
 
     it('should not parse to XML when some data is already set and safety is on', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.xml(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             
@@ -84,7 +84,7 @@ describe ('xmlAnuvadak', () => {
 
     it('should parse XML when no options are defined', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.xml(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeXml({
@@ -105,11 +105,9 @@ describe ('xmlAnuvadak', () => {
 
     it('should parse XML when global options are present', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem, {
+        anuvadak.xml(muneem, {
             write:{
-                xml:{
-                    ignoreAttributes : false
-                }
+                ignoreAttributes : false
             }
         });
 
@@ -132,11 +130,9 @@ describe ('xmlAnuvadak', () => {
 
     it('should parse XML and ignore global options when route specific options are present', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem, {
+        anuvadak.xml(muneem, {
             write:{
-                xml:{
-                    ignoreAttributes : false
-                }
+                ignoreAttributes : false
             }
         });
 

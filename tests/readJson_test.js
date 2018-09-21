@@ -7,7 +7,7 @@ describe ('Anuvadak', () => {
 
     it('should read JSON request stream', async (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.json(muneem);
 
         muneem.addHandler("main", async (asked,answer) => {
             var data = await asked.readJson();

@@ -15,7 +15,7 @@ describe ('writeStream', () => {
 
     it('should set data, content-type when given', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             //create a stream
@@ -52,7 +52,7 @@ describe ('writeStream', () => {
 
     it('should overwrite previously set data when safety is off', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.write("previous data");
@@ -90,7 +90,7 @@ describe ('writeStream', () => {
 
     it('should not overwrite previously set data when safety is on', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.write("previous data");
@@ -117,7 +117,7 @@ describe ('writeStream', () => {
 
     it('should pipe data stream when to pipe', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         //create a file for test
         fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
@@ -162,7 +162,7 @@ describe ('writeStream', () => {
 
     it('should pipe data stream even if safety is on', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         //create a file for test
         fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
@@ -206,7 +206,7 @@ describe ('writeStream', () => {
 
     it('should not pipe data stream when not to pipe', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         //create a file for test
         fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
@@ -248,7 +248,7 @@ describe ('writeStream', () => {
 
     it('should not set type if already set', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         //create a file for test
         fs.writeFileSync(path.resolve(__dirname, "fileToDownload"), "This file is ready for download");
@@ -289,7 +289,7 @@ describe ('writeStream', () => {
 
     it('should throw an error when invalid data is given', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeStream(new Date());
@@ -312,7 +312,7 @@ describe ('writeStream', () => {
 
     it('should throw an error when null data is given', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeStream(null);
@@ -335,7 +335,7 @@ describe ('writeStream', () => {
 
     it('should throw an error when undefined data is given', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeStream();
@@ -358,7 +358,7 @@ describe ('writeStream', () => {
 
     it('should throw an error when invalid data is appended', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.stream(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.write("new Date()");

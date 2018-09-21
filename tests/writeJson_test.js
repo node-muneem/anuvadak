@@ -7,7 +7,7 @@ describe ('jsonAnuvadak', () => {
 
     it('should throw error when no data is given', () => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.json(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             expect( function(){
@@ -25,7 +25,7 @@ describe ('jsonAnuvadak', () => {
 
     it('should throw error when invalid data is given', () => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.json(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             expect( function(){
@@ -43,7 +43,7 @@ describe ('jsonAnuvadak', () => {
 
     it('should not parse to JSON when some data is already set and safety is on', () => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.json(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             
@@ -65,7 +65,7 @@ describe ('jsonAnuvadak', () => {
 
     it('should parse to JSON valid data is given', () => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.json(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeJson({

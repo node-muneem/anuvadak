@@ -11,7 +11,7 @@ const isStream = function(data){
  * @param {boolean} safe : if response data is already set then don't overwrite 
  * @param {boolean} pipe : pipe content stream if already present
  */
-module.exports = function(data, type, safe, pipe){
+function writeStream(data, type, safe, pipe){
 
     if(data === null || data === undefined || !isStream(data) ){//invalid data
         this.length(0);
@@ -35,3 +35,10 @@ module.exports = function(data, type, safe, pipe){
         this.type(type);
     }
 }
+
+
+function config(muneem, options){
+    muneem.addToAnswer("writeStream", writeStream);
+}
+
+module.exports = config;

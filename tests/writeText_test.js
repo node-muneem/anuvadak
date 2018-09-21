@@ -7,7 +7,7 @@ describe ('writeText', () => {
 
     it('should throw Error when data is null', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeText(null);
@@ -30,7 +30,7 @@ describe ('writeText', () => {
 
     it('should throw Error data is undefined', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.plainText(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeText();
@@ -53,7 +53,7 @@ describe ('writeText', () => {
 
     it('should set empty data, content-type, and 0 length when data is empty string', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
             answer.writeText("");
@@ -78,7 +78,7 @@ describe ('writeText', () => {
     it('should set data, content-type, and length when data is string type', (done) => {
         //Muneem.setLogger(console);
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText("some data");
@@ -102,7 +102,7 @@ describe ('writeText', () => {
 
     it('should set data, content-type, and length when data is number type', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText(485);
@@ -126,7 +126,7 @@ describe ('writeText', () => {
     
     it('should overwrite data when safety is off', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText("some data");
@@ -151,7 +151,7 @@ describe ('writeText', () => {
 
     it('should not overwrite data when safety is on', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText("some data");
@@ -176,7 +176,7 @@ describe ('writeText', () => {
 
     it('should not check for safety when to append', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText("some data");
@@ -201,7 +201,7 @@ describe ('writeText', () => {
 
     it('should not set content-type if already set', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.type("some/else")
@@ -227,7 +227,7 @@ describe ('writeText', () => {
 
     it('should throw an error when invalid data is given', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.writeText(new Date());
@@ -250,7 +250,7 @@ describe ('writeText', () => {
 
     it('should throw an error when invalid data is appended', (done) => {
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.text(muneem);
 
         muneem.addHandler("main", (asked, answer) => {
             answer.write(Buffer.from("buffer data"));

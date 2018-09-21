@@ -21,12 +21,17 @@ function setType(answer, type, defaultType){
     }
 }
 
-function fileExist(path){
+function fileExist(filepath){
     return fs.existsSync(filepath) && fs.lstatSync(filepath).isFile();
+}
+
+function isDirectoryExist(filepath){
+    return fs.existsSync(filepath) && fs.lstatSync(filepath).isDirectory();
 }
 
 module.exports = {
     setType : setType, 
     setLength : setLength,
-    fileExist : fileExist
+    fileExist : fileExist,
+    isDirectoryExist : isDirectoryExist
 }

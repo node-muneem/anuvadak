@@ -7,7 +7,7 @@ const { setType, setLength} = require("./util")
  * @param {number} length : content-length
  * @param {boolean} append : append content if already present
  */
-module.exports.writeJson = function(data, type, length, safe){
+const writeJson = function(data, type, length, safe){
     if(data === undefined || typeof data === 'function' || typeof  data === 'symbol' ){
         this.length(0);
         throw Error("Unsupported type. Given data can't be parsed to JSON.");
@@ -22,8 +22,16 @@ module.exports.writeJson = function(data, type, length, safe){
 }
 
 
-module.exports.readJson = async function(){
+const readJson = async function(){
     await this.readBody();
     this.body = JSON.parse( this.body.toString() );
     return this.body;
 }
+
+
+function config(muneem, options){
+    muneem.addToAnswer("writeJson", writeJson);
+    muneem.addToAsked("readJson", readJson);
+}
+
+module.exports = config;

@@ -7,7 +7,7 @@ const { setType, setLength} = require("./util")
  * @param {number} length : content-length
  * @param {boolean} append : append content if already present
  */
-module.exports = function(data, type, length, safe, append){
+function writeText(data, type, length, safe, append){
     if( typeof data === "number"){
         data += '';
     }else if( typeof data === "string"){
@@ -35,3 +35,9 @@ module.exports = function(data, type, length, safe, append){
     setLength(this, length)
 
 }
+
+function config(muneem, options){
+    muneem.addToAnswer("writeText", writeText);
+}
+
+module.exports = config;

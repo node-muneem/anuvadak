@@ -14,7 +14,7 @@ describe ('jsonAnuvadak', () => {
     it('should throw error when request stream is not JSON', (done) => {
         //Muneem.setLogger(console);
         const muneem = Muneem();
-        anuvadak(muneem);
+        anuvadak.json(muneem);
 
         muneem.addHandler("main", async (asked,answer) => {
             await asked.readJson();
