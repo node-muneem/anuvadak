@@ -1,6 +1,6 @@
 {
   "name": "anuvadak",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Add basic serialization and body barsing methods to Muneem framework",
   "main": "src/anuvadak.js",
   "scripts": {
