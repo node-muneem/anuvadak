@@ -67,7 +67,7 @@ function config(muneem, options){
     muneem.addToAnswer("writeXml", xmlAnuvadak.writeXml);
     muneem.addToAsked("readXml", xmlAnuvadak.readXml);
 
-    muneem.on("addRoute", buildWriteConfiguration);
+    muneem.before("addRoute", buildWriteConfiguration);
 }
 
 /**
