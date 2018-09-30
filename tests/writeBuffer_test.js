@@ -10,8 +10,8 @@ describe ('writeBuffer', () => {
         anuvadak.buffer(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
-            answer.writeBuffer(Buffer("some data"));
-            assertAnswerObject(answer, Buffer("some data"), "application/octet-stream", 9);
+            answer.writeBuffer(Buffer.from("some data"));
+            assertAnswerObject(answer, Buffer.from("some data"), "application/octet-stream", 9);
         } ) ;
 
         muneem.route({
@@ -34,9 +34,9 @@ describe ('writeBuffer', () => {
         anuvadak.buffer(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
-            answer.writeBuffer(Buffer("some data"), null, null, true);
-            answer.writeBuffer(Buffer("some more data"), null, null, true);
-            assertAnswerObject(answer, Buffer("some data"), "application/octet-stream", 9);
+            answer.writeBuffer(Buffer.from("some data"), null, null, true);
+            answer.writeBuffer(Buffer.from("some more data"), null, null, true);
+            assertAnswerObject(answer, Buffer.from("some data"), "application/octet-stream", 9);
         } ) ;
 
         muneem.route({
@@ -59,9 +59,9 @@ describe ('writeBuffer', () => {
         anuvadak.buffer(muneem);
 
         muneem.addHandler("main", (asked,answer) => {
-            answer.writeBuffer(Buffer("some data"), null, null, false);
-            answer.writeBuffer(Buffer("some more data"), null, null, false);
-            assertAnswerObject(answer, Buffer("some more data"), "application/octet-stream", 14);
+            answer.writeBuffer(Buffer.from("some data"), null, null, false);
+            answer.writeBuffer(Buffer.from("some more data"), null, null, false);
+            assertAnswerObject(answer, Buffer.from("some more data"), "application/octet-stream", 14);
         } ) ;
 
         muneem.route({
@@ -85,9 +85,9 @@ describe ('writeBuffer', () => {
 
         muneem.addHandler("main", (asked,answer) => {
             answer.type("some/type");
-            answer.writeBuffer(Buffer("some data"), null, null, false);
-            answer.writeBuffer(Buffer("some more data"), null, null, false);
-            assertAnswerObject(answer, Buffer("some more data"), "some/type", 14);
+            answer.writeBuffer(Buffer.from("some data"), null, null, false);
+            answer.writeBuffer(Buffer.from("some more data"), null, null, false);
+            assertAnswerObject(answer, Buffer.from("some more data"), "some/type", 14);
         } ) ;
 
         muneem.route({
@@ -111,9 +111,9 @@ describe ('writeBuffer', () => {
 
         muneem.addHandler("main", (asked,answer) => {
             answer.type("some/type");
-            answer.writeBuffer(Buffer("some data "), null, null, false);
-            answer.writeBuffer(Buffer("some more data"), null, null, false, true);
-            assertAnswerObject(answer, Buffer("some data some more data"), "some/type", 24);
+            answer.writeBuffer(Buffer.from("some data "), null, null, false);
+            answer.writeBuffer(Buffer.from("some more data"), null, null, false, true);
+            assertAnswerObject(answer, Buffer.from("some data some more data"), "some/type", 24);
         } ) ;
 
         muneem.route({
