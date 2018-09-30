@@ -18,7 +18,9 @@
     "json",
     "form",
     "multipart",
-    "url-encoded"
+    "url-encoded",
+    "content",
+    "file"
   ],
   "author": "Amit Kumar Gupta (http://amitkumargupta.work)",
   "license": "MIT",
@@ -39,7 +41,8 @@
     "fast-xml-parser": "^3.12.0",
     "formidable": "^1.2.1",
     "pump": "^3.0.0",
-    "qs": "^6.5.2"
+    "qs": "^6.5.2",
+    "send": "^0.16.2"
   },
   "nyc": {
     "exclude": [

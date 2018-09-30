@@ -9,5 +9,6 @@ module.exports = {
     urlForm : require("./urlForm"),
     urlEncodedForm : require("./urlForm"),//alias
     form : require("./form"),
-    files : require("./files"),
+    readFiles : require("./readFiles"),
+    sendFiles : require("./sendFiles"),
 }

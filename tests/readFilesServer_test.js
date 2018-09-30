@@ -19,7 +19,7 @@ describe ('Anuvadak Form', () => {
             }
         });
         //anuvadak.files(muneem);
-        muneem.use(anuvadak.files)
+        muneem.use(anuvadak.readFiles)
         
         muneem.addHandler("main", async (asked,answer) => {
             var data = await asked.readFiles({

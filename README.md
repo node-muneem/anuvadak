@@ -241,7 +241,7 @@ function requestHandler(asked, answer){
 This uses [formidable](https://github.com/felixge/node-formidable) underneath.
 
 
-### Files
+### Read Files
 it allows you to read only files from request stream.
 
 ```js
@@ -266,7 +266,7 @@ var globalOptions = {
         aborted : () => {}
     }
 }
-muneem.use(anuvadak.form, globalOptions); 
+muneem.use(anuvadak.readFiles, globalOptions); 
 
 function fileRequestHandlerSync(asked, answer){
     var options = {
@@ -292,3 +292,39 @@ function fileRequestHandler(asked, answer){
 Though you can read files, it's good to read it mixed forms or the forms with non-file fields only. To read the forms with files field only, use `readFiles`
 
 This uses [formidable](https://github.com/felixge/node-formidable) underneath.
+
+### Send Files
+it allows you to send static files to the client.
+
+```js
+const muneem = require('muneem')();
+const anuvadak = require('anuvadak');
+
+muneem.use(anuvadak.sendFiles, {
+    root : path.join(__dirname ),  //required 
+    ignore404 : true,                   // ignore default "resource not found" handling
+    ignoreRequestPath : true      // force to ignore URL path
+});
+
+muneem.addHandler("main", async (asked,answer) => {
+    //answer.sendFile("static/index.html"); // path.join( root , "static/index.html" );
+    answer.sendFile(); // path.join( root , asked.path );
+} ) ;
+
+muneem.route({
+    uri : "/"
+    to : "main"
+})
+
+muneem.route({
+    uri : "/static/*"
+    to : "main"
+})
+
+```
+
+You can set `ignore404` to ignore by default handling of file not found case. Otherwise it invokes *routeNotFound* handler that can be set as `muneem.setRouteNotFound(fn)`.
+
+You can set `ignoreRequestPath` to not to read file path from the URL. In this case, you must pass the file path, relative to the root path, when you call `sendFile(filePath)`.
+
+You can visit [send](https://github.com/pillarjs/send/) npm package for more options and events.

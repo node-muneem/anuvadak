@@ -24,7 +24,7 @@ function writeStream(data, type, safe, pipe){
         if( !isStream(this.data) ){
             throw Error("Unsupported type. You're trying to pipe stream data on non-stream data.");
         }else{
-            pump(this.data,data);
+            pump(this.data, data);
             this.data = data;
         }
     }else{
