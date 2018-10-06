@@ -5,12 +5,12 @@ const anuvadak = require('./../src/anuvadak');
 
 describe ('Anuvadak', () => {
 
-    it('should read URL encoded forms from query string', async (done) => {
+    it('should read URL encoded forms from body', async (done) => {
         const muneem = Muneem();
         anuvadak.urlEncodedForm(muneem);
 
         muneem.addHandler("main", async (asked,answer) => {
-            var data = asked.readUrlEncodedForm();
+            var data = await asked.readUrlEncodedForm();
             expect(data).toEqual({
                 foo: {
                     bar: {
@@ -22,7 +22,7 @@ describe ('Anuvadak', () => {
         } ) ;
 
         var request = buildRequest(muneem)
-        request.write("anything");
+        request.write("foo[bar][baz]=foobarbaz");
         request.end();
 
         var response = new MockRes();
@@ -35,7 +35,7 @@ describe ('Anuvadak', () => {
         const muneem = Muneem();
         anuvadak.urlEncodedForm(muneem, {depth : 0});
         muneem.addHandler("main", async (asked,answer) => {
-            var data = asked.readUrlEncodedForm();
+            var data = await asked.readUrlEncodedForm();
             expect(data).toEqual({
                 foo: {
                     "[bar][baz]": 'foobarbaz'
@@ -45,7 +45,7 @@ describe ('Anuvadak', () => {
         } ) ;
 
         var request = buildRequest(muneem)
-        request.write("anything");
+        request.write("foo[bar][baz]=foobarbaz");
         request.end();
 
         var response = new MockRes();
@@ -59,7 +59,7 @@ describe ('Anuvadak', () => {
         anuvadak.urlEncodedForm(muneem, {depth : 0});
 
         muneem.addHandler("main", async (asked,answer) => {
-            var data = asked.readUrlEncodedForm({ depth : 1});
+            var data = await asked.readUrlEncodedForm({ depth : 1});
             expect(data).toEqual({
                 foo: {
                     bar: {
@@ -71,7 +71,7 @@ describe ('Anuvadak', () => {
         } ) ;
 
         var request = buildRequest(muneem)
-        request.write("anything");
+        request.write("foo[bar][baz]=foobarbaz");
         request.end();
 
         var response = new MockRes();
@@ -89,7 +89,7 @@ describe ('Anuvadak', () => {
         });
 
         return new MockReq({
-            url: '/test?foo[bar][baz]=foobarbaz',
+            url: '/test',
             method: "POST",
         });
     }

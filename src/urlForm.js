@@ -4,14 +4,15 @@ const qs = require('qs')
 function UrlFormReader(globalOptions){
     if(!globalOptions) globalOptions = {};
 
-    this.readForm =  function(options){
+    this.readForm =  async function(options){
         options = Object.assign({}, globalOptions, options);
 
-        if( !this.queryStr || (options.confirmHeaderParam  && this.headers["content-type"] !== "application/x-www-form-urlencoded" ) ){
+        if( !this._mayHaveBody || (options.confirmHeaderParam  && this.headers["content-type"] !== "application/x-www-form-urlencoded" ) ){
             return;
         }
-    
-        this.body = qs.parse( this.queryStr, options ); //this.body will be object now
+
+        await this.readBody();
+        this.body = qs.parse( this.body.toString(), options ); //this.body will be object now
         return this.body;
     }
 }
