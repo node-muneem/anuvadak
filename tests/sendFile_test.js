@@ -118,39 +118,71 @@ describe ('Files', () => {
         });
         
         muneem.use(anuvadak.sendFiles, {
-            root : path.join(__dirname ),
+            root : path.join(__dirname , "static"),
             ignore404 : true,                   // ignore default resource not found handling
             ignoreRequestPath : true      // force to ignore URL path
         });
     
         muneem.addHandler("main", async (asked,answer) => {
+            answer.sendFile("index.html");
+        } ) ;
+
+        muneem.addHandler("custom404", async (asked,answer) => {
             var stream = answer.sendFile("index2.html");
             stream.on("error", err => {
                 if(err.code === "ENOENT"){
-                    this.error(err);
+                    answer.error(err);
                 }
             })
         } ) ;
     
         muneem.addHandler("ignoreUrlPath", async (asked,answer) => {
-            answer.sendFile();
+            answer.sendFile({
+                from: "nested"
+            });
         } ) ;
     
         muneem.route({
-            uri: "/static/index.html",
+            uri: "/notexist.html",
             to: "main"
+        });
+        
+        muneem.route({
+            uri: "/index2.html",
+            to: "custom404"
         });
     
         muneem.route({
-            uri: "/static/nested/nested.txt",
+            uri: "/nested.txt",
             to: "ignoreUrlPath"
         });
     
         muneem.start();
     
+        it('should send given file', (done) => {
+            chai.request("http://localhost:3007")
+                .get('/notexist.html')
+                //.set('content-type', 'application/json')
+                .send("")
+                .then(res => {
+                    expect( res.status).toBe(200);
+                    expect( res.text).toBe(`<html>
+    <head>
+
+    </head>
+    <body>
+        This is the home page.
+    </body>
+</html>`);
+                done();
+            }).catch( err => {
+                done.fail("not expected " + err);
+            });
+        });
+        
         it('should invoke custom resource not found handler when ignore404 is set', (done) => {
             chai.request("http://localhost:3007")
-                .get('/static/index.html')
+                .get('/index2.html')
                 //.set('content-type', 'application/json')
                 .send("")
                 .then(res => {
@@ -164,7 +196,7 @@ describe ('Files', () => {
     
          it('should ignore reading the file path from the URL when ignoreRequestPath is set', (done) => {
              chai.request("http://localhost:3007")
-             .get('/static/nested/nested.txt')
+             .get('/nested.txt')
              .send("")
              .then(res => {
                  expect( res.status).toBe(500);
