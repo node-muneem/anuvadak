@@ -61,18 +61,14 @@ describe ('Anuvadak', () => {
         });
 
         muneem.addHandler("main", async (asked,answer) => {
-            var data = await asked.readXml();
+            var data = await asked.readXml({
+                ignoreAttributes : true
+            });
             expect(data).toEqual({some : "some text data"});
             done();
         } ) ;
 
-        var request = buildRequest(muneem, {
-            read:{
-                xml: {
-                    ignoreAttributes : true
-                }
-            }
-        })
+        var request = buildRequest(muneem)
         request.write("<some a='attrib'>some text data</some>");
         request.end();
 
@@ -82,12 +78,11 @@ describe ('Anuvadak', () => {
         muneem.routesManager.router.lookup(request,response);
     });
 
-    function buildRequest(muneem, options, data){
+    function buildRequest(muneem){
         muneem.route({
             when: "POST",
-            uri: "/test",
-            to: "main",
-            anuvadak : options
+            url: "/test",
+            to: "main"
         });
 
         return new MockReq({

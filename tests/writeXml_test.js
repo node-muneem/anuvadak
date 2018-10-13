@@ -68,7 +68,7 @@ describe ('xmlAnuvadak', () => {
             answer.write("add some data")
             answer.writeXml({
                 "some" : "data"
-            }, null, null, true);
+            }, null, null, null, true);
 
             assertAnswerObject(answer, "add some data");
             done();
@@ -142,28 +142,23 @@ describe ('xmlAnuvadak', () => {
                     "@_a" : "attrib",
                     "#text" : "some text data"
                 }
+            }, {
+                ignoreAttributes : true
             });
             assertAnswerObject(answer, '<some><@_a>attrib</@_a>some text data</some>', 'text/xml', 44);
             done();
         } ) ;
 
-        var request = buildRequest(muneem, {
-            write:{
-                xml:{
-                    ignoreAttributes : true
-                }
-            }
-        })
+        var request = buildRequest(muneem)
         var response = new MockRes();
 
         muneem.routesManager.router.lookup(request,response);
     });
 
-    function buildRequest(muneem, options){
+    function buildRequest(muneem){
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main",
-            anuvadak : options
         });
 
         return new MockReq({

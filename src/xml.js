@@ -2,13 +2,26 @@ const { setType, setLength} = require("./util")
 const j2xParser = require("fast-xml-parser").j2xParser;
 const xmlParser = require("fast-xml-parser");
 
-function XMLAnuvadak(options){
-    if(!options) options = {};
+function XMLAnuvadak(globalOptions){
+    if(!globalOptions) globalOptions = {};
 
-    const globalXmlWriter = getWriter(options.write);
-    const xmlReadGlobalOptions = options.read;
+    const globalXmlWriter = getWriter(globalOptions.write);
+    const xmlReadGlobalOptions = globalOptions.read;
 
-    this.writeXml = function (data, type, length, safe){
+    this.writeXml = function (){
+        let data = arguments[0], localOptions, type, length, safe;
+        if( typeof arguments[1] === 'object'){
+            localOptions = arguments[1];
+            type = arguments[2];
+            length = arguments[3];
+            safe = arguments[4];
+        }else{
+            type = arguments[1];
+            length = arguments[2];
+            safe = arguments[3];
+        }
+
+        const xmlWriter = localOptions !== undefined ? getWriter( localOptions ) : globalXmlWriter;
 
         if(data === null || data === undefined || typeof data !== "object" ){
             this.length(0);
@@ -16,31 +29,15 @@ function XMLAnuvadak(options){
         }else if(this.data && safe){
             return;
         }else{
-            const anuvadakConfig = this._for.context.route.anuvadak;
-    
-            var parser;
-            if(anuvadakConfig && anuvadakConfig.write && anuvadakConfig.write.xml){
-                parser = anuvadakConfig.write.xml; //route specific parser
-            }else{
-                parser = globalXmlWriter;
-            }
-    
-            this.data = parser.parse(data);
+            this.data = xmlWriter.parse(data);
     
             setType(this, type, "text/xml");
             setLength(this, length)
         } 
     }
 
-    this.readXml = async function(){
-        const anuvadakConfig = this.context.route.anuvadak;
-    
-        var parsingOptions ;
-        if(anuvadakConfig && anuvadakConfig.read && anuvadakConfig.read.xml){
-            parsingOptions = anuvadakConfig.read.xml; //route specific options
-        }else{
-            parsingOptions = xmlReadGlobalOptions;
-        }
+    this.readXml = async function(localOptions){
+        const parsingOptions = Object.assign( {}, xmlReadGlobalOptions, localOptions);
         
         await this.readBody();
         this.body = xmlParser.parse( this.body.toString() , parsingOptions);
@@ -66,20 +63,6 @@ function config(muneem, options){
     var xmlAnuvadak = new XMLAnuvadak(options);
     muneem.addToAnswer("writeXml", xmlAnuvadak.writeXml);
     muneem.addToAsked("readXml", xmlAnuvadak.readXml);
-
-    muneem.before("addRoute", buildWriteConfiguration);
-}
-
-/**
- * Build XML writer for each router at the time of adding route
- * @param {object} routeContext 
- */
-function buildWriteConfiguration(routeContext){
-    if(routeContext.anuvadak) { //route level configuration
-        if(routeContext.anuvadak.write && routeContext.anuvadak.write.xml){//write to response
-            routeContext.anuvadak.write.xml = getWriter( routeContext.anuvadak.write.xml );
-        }
-    }
 }
 
 module.exports = config;
