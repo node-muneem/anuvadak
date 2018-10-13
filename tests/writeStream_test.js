@@ -25,7 +25,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -63,7 +63,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -102,7 +102,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -132,7 +132,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -177,7 +177,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -220,7 +220,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -262,7 +262,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -296,7 +296,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -319,7 +319,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -342,7 +342,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -371,7 +371,7 @@ describe ('writeStream', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 

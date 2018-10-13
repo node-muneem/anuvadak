@@ -6,10 +6,10 @@ const anuvadak = require('./../src/anuvadak');
 describe ('Anuvadak', () => {
 
     it('should read URL encoded forms from body', async (done) => {
-        const muneem = Muneem();
-        anuvadak.urlEncodedForm(muneem);
+        const app = Muneem();
+        anuvadak.urlEncodedForm(app);
 
-        muneem.addHandler("main", async (asked,answer) => {
+        app.addHandler("main", async (asked,answer) => {
             var data = await asked.readUrlEncodedForm();
             expect(data).toEqual({
                 foo: {
@@ -21,14 +21,14 @@ describe ('Anuvadak', () => {
             done();
         } ) ;
 
-        var request = buildRequest(muneem)
+        var request = buildRequest(app)
         request.write("foo[bar][baz]=foobarbaz");
         request.end();
 
         var response = new MockRes();
 
         //assertResponse(response,"", 200, done);
-        muneem.routesManager.router.lookup(request,response);
+        app.routesManager.router.lookup(request,response);
     });
 
     it('should read URL encoded forms from query string with given options', async (done) => {
@@ -83,7 +83,7 @@ describe ('Anuvadak', () => {
     function buildRequest(muneem, options, data){
         muneem.route({
             when: "POST",
-            uri: "/test",
+            url: "/test",
             to: "main",
             anuvadak : options
         });

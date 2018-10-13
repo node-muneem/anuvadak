@@ -14,7 +14,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -37,7 +37,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -61,7 +61,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -86,7 +86,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -110,7 +110,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -135,7 +135,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -160,7 +160,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -185,7 +185,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -211,7 +211,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -234,7 +234,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -261,7 +261,7 @@ describe ('writeText', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 

@@ -13,15 +13,11 @@ chai.use(chaiHttp);
 describe ('Anuvadak Form', () => {
 
     it('should read multipart forms from the request stream', async (done) => {
-        const muneem = Muneem({
-            server : {
-                port : 3005
-            }
-        });
+        const app = Muneem();
         //anuvadak.files(muneem);
-        muneem.use(anuvadak.readFiles)
+        app.use(anuvadak.readFiles)
         
-        muneem.addHandler("main", async (asked,answer) => {
+        app.addHandler("main", async (asked,answer) => {
             var data = await asked.readFiles({
                 sync : true
             });
@@ -31,7 +27,7 @@ describe ('Anuvadak Form', () => {
             answer.write("I'm glad to response you back.");
         } ) ;
 
-        muneem.addHandler("upload", async (asked,answer) => {
+        app.addHandler("upload", async (asked,answer) => {
             var data = await asked.readFiles();
             expect(data.someField).toEqual(undefined);
             expect(data.fileField).toEqual(undefined);
@@ -39,21 +35,21 @@ describe ('Anuvadak Form', () => {
             answer.write("I'm glad to response you back.");
         } ) ;
 
-        muneem.route({
+        app.route({
             when: "POST",
-            uri: "/test",
+            url: "/test",
             to: "main",
             //anuvadak : options
         });
 
-        muneem.route({
+        app.route({
             when: "POST",
-            uri: "/upload",
+            url: "/upload",
             to: "upload",
             //anuvadak : options
         });
 
-        muneem.start();
+        app.start(3005);
 
         chai.request("http://localhost:3005")
             .post('/test')

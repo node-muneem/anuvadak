@@ -83,7 +83,7 @@ describe ('jsonAnuvadak', () => {
 
     function buildRequest(muneem, options){
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main",
             anuvadak : options
         });

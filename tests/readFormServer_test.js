@@ -13,14 +13,10 @@ chai.use(chaiHttp);
 describe ('Anuvadak Form', () => {
 
     it('should read multipart forms from the request stream', async (done) => {
-        const muneem = Muneem({
-            server : {
-                port : 3004
-            }
-        });
-        anuvadak.form(muneem);
+        const app = Muneem();
+        anuvadak.form(app);
         
-        muneem.addHandler("main", async (asked,answer) => {
+        app.addHandler("main", async (asked,answer) => {
             var data = await asked.readForm();
             
             expect(data.someField).toEqual('123');
@@ -29,14 +25,14 @@ describe ('Anuvadak Form', () => {
             answer.write("I'm glad to response you back.");
         } ) ;
 
-        muneem.route({
+        app.route({
             when: "POST",
-            uri: "/test",
+            url: "/test",
             to: "main",
             //anuvadak : options
         });
 
-        muneem.start();
+        app.start(3004);
 
         chai.request("http://localhost:3004")
             .post('/test')

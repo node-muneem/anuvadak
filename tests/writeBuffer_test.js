@@ -15,7 +15,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -40,7 +40,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -65,7 +65,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -91,7 +91,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -117,7 +117,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -140,7 +140,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -163,7 +163,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -186,7 +186,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
@@ -213,7 +213,7 @@ describe ('writeBuffer', () => {
         } ) ;
 
         muneem.route({
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 

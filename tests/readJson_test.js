@@ -31,7 +31,7 @@ describe ('Anuvadak', () => {
     function buildRequest(muneem, options, data){
         muneem.route({
             when: "POST",
-            uri: "/test",
+            url: "/test",
             to: "main",
             anuvadak : options
         });

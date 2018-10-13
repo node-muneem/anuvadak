@@ -20,10 +20,7 @@ describe ('Files', () => {
 
         //Muneem.setLogger(console);
         const muneem = Muneem({
-            server : {
                 requestId : true,
-                port : 3006
-            }
         });
         
         muneem.use(anuvadak.sendFiles, {
@@ -36,11 +33,11 @@ describe ('Files', () => {
         } ) ;
 
         muneem.route({
-            uri: "/*",
+            url: "/*",
             to: "main"
         });
 
-        muneem.start();
+        muneem.start(3006);
 
         it('should return static file', (done) => {
             chai.request("http://localhost:3006")
@@ -110,24 +107,21 @@ describe ('Files', () => {
     describe ('Files 2', () => {
 
         //Muneem.setLogger(console);
-        const muneem = Muneem({
-            server : {
+        const app = Muneem({
                 requestId : true,
-                port : 3007
-            }
         });
         
-        muneem.use(anuvadak.sendFiles, {
+        app.use(anuvadak.sendFiles, {
             root : path.join(__dirname , "static"),
             ignore404 : true,                   // ignore default resource not found handling
             ignoreRequestPath : true      // force to ignore URL path
         });
     
-        muneem.addHandler("main", async (asked,answer) => {
+        app.addHandler("main", async (asked,answer) => {
             answer.sendFile("index.html");
         } ) ;
 
-        muneem.addHandler("custom404", async (asked,answer) => {
+        app.addHandler("custom404", async (asked,answer) => {
             var stream = answer.sendFile("index2.html");
             stream.on("error", err => {
                 if(err.code === "ENOENT"){
@@ -136,28 +130,28 @@ describe ('Files', () => {
             })
         } ) ;
     
-        muneem.addHandler("ignoreUrlPath", async (asked,answer) => {
+        app.addHandler("ignoreUrlPath", async (asked,answer) => {
             answer.sendFile({
                 from: "nested"
             });
         } ) ;
     
-        muneem.route({
-            uri: "/notexist.html",
+        app.route({
+            url: "/notexist.html",
             to: "main"
         });
         
-        muneem.route({
-            uri: "/index2.html",
+        app.route({
+            url: "/index2.html",
             to: "custom404"
         });
     
-        muneem.route({
-            uri: "/nested.txt",
+        app.route({
+            url: "/nested.txt",
             to: "ignoreUrlPath"
         });
     
-        muneem.start();
+        app.start(3007);
     
         it('should send given file', (done) => {
             chai.request("http://localhost:3007")

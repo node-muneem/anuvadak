@@ -34,7 +34,7 @@
     "jasmine": "^3.2.0",
     "mock-req": "^0.2.0",
     "mock-res": "^0.5.0",
-    "muneem": "^2.3.0",
+    "muneem": "^2.4.1",
     "nyc": "^12.0.2"
   },
   "dependencies": {

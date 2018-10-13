@@ -13,21 +13,21 @@ describe ('jsonAnuvadak', () => {
 
     it('should throw error when request stream is not JSON', (done) => {
         //Muneem.setLogger(console);
-        const muneem = Muneem();
-        anuvadak.json(muneem);
+        const app = Muneem();
+        anuvadak.json(app);
 
-        muneem.addHandler("main", async (asked,answer) => {
+        app.addHandler("main", async (asked,answer) => {
             await asked.readJson();
             answer.write("I'm glad to response you back.");
         } ) ;
 
-        muneem.route({
+        app.route({
             when: "POST",
-            uri: "/test",
+            url: "/test",
             to: "main"
         });
 
-        muneem.start();
+        app.start(3002);
 
         chai.request("http://localhost:3002")
             .post('/test')
