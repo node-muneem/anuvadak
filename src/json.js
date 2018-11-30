@@ -31,6 +31,7 @@ const readJson = async function(){
 
 function config(muneem, options){
     muneem.addToAnswer("writeJson", writeJson);
+    muneem.addToAnswer("asJson", writeJson);
     muneem.addToAsked("readJson", readJson);
 }
 
