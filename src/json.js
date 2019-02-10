@@ -24,6 +24,7 @@ const writeJson = function(data, type, length, safe){
 
 const readJson = async function(){
     await this.readBody();
+    //TODO: use https://github.com/hapijs/bourne parse to avoid prototype poisoning
     this.body = JSON.parse( this.body.toString() );
     return this.body;
 }
