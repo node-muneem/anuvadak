@@ -1,0 +1,73 @@
+
+
+P1
+* all the readXXX() shoud check if this.data is already set.
+* separate readXXX, writeXXX registration
+* 
+* Code coverage
+* Form Handling
+
+* Upload files
+  * Duplicate file upload
+  * Large file upload
+    * when restricted at route level
+  
+* writeFile
+    automatically detect file's content/mime type
+
+P2
+
+* Form Handling
+    parse : true; //parse numeric, boolean fields
+    acceptUnknown : true
+    acceptUnknown : false
+        fields : [ ]
+        onUnknownField
+
+    file :
+        counter : 0 // -1, 3
+        onExceed : 
+            error when counter increases
+            delete temp files
+  * readFiles
+* google protobuf
+* msgpack
+* Nimn
+* emit event
+* pass mime type(s) in readXXX() to verify header before reading
+
+
+P3
+* Calling validater 
+* readFile
+* readForm
+* readFormFields
+* readFiles
+
+
+multiples : true
+{
+  "files": {
+    "upload": [ // it'll not be an array if multiples: false
+      {
+        "size": 748831,
+        "path": "/tmp/f7777b4269bf6e64518f96248537c0ab.png",
+        "name": "balo3.png",
+        "type": "image/png",
+        "mtime": "2014-06-17T11:08:52.816Z"
+      },
+      {
+        "size": 379749,
+        "path": "/tmp/83b8cf0524529482d2f8b5d0852f49bf.jpeg",
+        "name": "phpcode.jpeg",
+        "type": "image/jpeg",
+        "mtime": "2014-06-17T11:08:52.830Z"
+      }
+    ]
+  },
+  "fields": {
+    "title": ""
+  }
+}
+
+
